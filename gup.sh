@@ -1,12 +1,12 @@
-#/bin/bash
-
+# Gup entry-point.
 gup() {
   # By default, go up once.
-  COUNT="${1:-1}"
+  declare -i COUNT="${1:-1}"
 
   COMMAND="cd "
-  for i in {1..$COUNT}; do
+  for i in $(seq 1 $COUNT); do
     COMMAND="$COMMAND../"
   done
+
   eval $COMMAND
 }
