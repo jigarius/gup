@@ -10,19 +10,19 @@ bunch of `..` (dot dot).
 * Source the `gup.sh` file in your shell to get the `gup` command.
 
 ```
-# In ~/.zshrc
-source /Users/jigarius/gup/gup.sh
+# In ~/.bashrc or equivalent.
+source /path/to/gup/gup.sh
 ```
 
 ## Usage
 
-`gup` takes only 1 optional argument, i.e. the number of levels you want to go up. It goes up `1` directory by default.
+Here are some ways to use `gup`.
 
 ```
 # Goes up 1 level. Equivalent of cd ..
 gup
 
-# Goes up 3 levels. Equivalent of cd ../..
+# Goes up 3 levels. Equivalent of cd ../../..
 gup 3
 ```
 
