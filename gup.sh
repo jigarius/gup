@@ -11,25 +11,42 @@ gup() {
   fi
 
   # By default, go up once.
-  local -i COUNT="${1:-1}"
-  __gup_log "Target is: $COUNT"
-
-  # Build command.
-  local COMMAND=""
+  local TARGET="${1:-1}"
+  __gup_log "Target is: $TARGET."
 
   # For numeric argument.
-  COMMAND="cd "
-  for i in $(seq 1 $COUNT); do
-    COMMAND="$COMMAND../"
-  done
-
-  # Execute command.
-  if [[ ! -z "$COMMAND" ]]; then
-    __gup_log "Running command: $COMMAND"
-    eval $COMMAND
-  else
-    __gup_log "Error: Nothing can be done."
+  if [[ $TARGET =~ ^-?[0-9]+$ ]]; then
+    __gup_log "Target is numeric."
+    __gup_by_number $TARGET
   fi
+}
+
+# Runs gup with numeric argument.
+__gup_by_number() {
+  # Cast argument to integer.
+  local -i COUNT="${1:-1}"
+
+  if (( $COUNT < 0 )); then
+    __gup_log "Argument cannot be negative."
+    exit 1
+  fi
+
+  local COMMAND=""
+  if (( $COUNT == 0 )); then
+    __gup_log "Staying in the same directory."
+
+    COMMAND="cd ."
+  else
+    __gup_log "Going up $COUNT directories."
+
+    local COMMAND="cd "
+    for I in $(seq 1 $COUNT); do
+      COMMAND="$COMMAND../"
+    done
+  fi
+
+  __gup_log "Running: $COMMAND"
+  eval $COMMAND
 }
 
 # Logs a message.
