@@ -20,10 +20,16 @@ Here are some ways to use `gup`.
 
 ```
 # Goes up 1 level. Equivalent of cd ..
-gup
+/a/b/c $ gup
+/a/b $
 
 # Goes up 3 levels. Equivalent of cd ../../..
-gup 3
+/a/b/c/d $ gup 3
+/a $
+
+# Goes up to the nearest directory named "b".
+/a/b/b/c/d $ gup b
+/a/b/b $
 ```
 
 Feel free to use it and leave your suggestions!
