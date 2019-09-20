@@ -14,6 +14,7 @@ bunch of `..` (dot dot). Laziness is the mother of invention.
 ```
 # In ~/.bashrc or equivalent.
 source /path/to/gup/gup.sh
+source /path/to/gup/gup-completion.sh
 ```
 
 ## Usage
