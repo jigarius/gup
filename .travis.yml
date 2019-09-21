@@ -1,7 +1,5 @@
 language: bash
 install:
   - git clone --branch v0.4.0 https://github.com/sstephenson/bats.git
-before_script:
-  - sudo mkdir -p /a/b/b/c/d
 script:
   - bats/bin/bats tests/tests.bats
