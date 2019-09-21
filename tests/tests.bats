@@ -65,3 +65,9 @@
   gup x
   [ "$PWD" == "/a/b/b/c/d" ]
 }
+
+@test "gup --version: shows version." {
+  source "$TRAVIS_BUILD_DIR/gup.sh"
+  output="$(gup --version)"
+  [ "$output" == "gup $__GUP_VERSION" ]
+}
