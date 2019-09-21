@@ -9,13 +9,13 @@ fi
 # Gup command-completion with TAB.
 __gup_complete() {
   # Ignore the current directory from suggestions.
-  local SUGG_PATH=$(dirname $PWD)
-  while [ "$SUGG_PATH" != "/" ]
+  local sugg_path=$(dirname $PWD)
+  while [ "$sugg_path" != "/" ]
   do
     # SUGG_DIRNAME=$(basename "$SUGG_PATH")
     # COMPREPLY+=$("$SUGG_DIRNAME")
-    COMPREPLY+=($(basename "$SUGG_PATH"))
-    SUGG_PATH=$(dirname $SUGG_PATH)
+    COMPREPLY+=($(basename "$sugg_path"))
+    sugg_path=$(dirname $sugg_path)
   done
 }
 
