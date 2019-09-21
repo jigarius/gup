@@ -48,13 +48,12 @@ __gup_by_number() {
   if (( $COUNT != 0 )); then
     __gup_log "Going up $COUNT directories."
 
-    local COMMAND="cd "
+    local command="cd "
     for I in $(seq 1 $COUNT); do
-      COMMAND="$COMMAND../"
+      command="$command../"
     done
 
-    __gup_log "Running: $COMMAND"
-    eval $COMMAND
+    __gup_eval "$command"
   fi
 }
 
@@ -82,9 +81,18 @@ __gup_by_string() {
   if [[ "$DEST" == "/" ]]; then
     __gup_log "Ancestor directory \"$TARGET\" not found."
   else
-    COMMAND="cd $DEST"
-    __gup_log "Running: $COMMAND"
-    eval $COMMAND
+    __gup_eval "cd $DEST"
+  fi
+}
+
+# Executs a command.
+#
+# Usage: __gup_eval [command]
+__gup_eval() {
+  local command="$1"
+  if [[ ! -z "$command" ]]; then
+    __gup_log "Running: $command"
+    eval $command
   fi
 }
 
