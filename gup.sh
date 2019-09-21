@@ -81,7 +81,7 @@ __gup_by_string() {
   if [[ "$dest" == "/" ]]; then
     __gup_log "Ancestor directory \"$target\" not found."
   else
-    __gup_eval "cd $dest"
+    __gup_eval "cd \"$dest\""
   fi
 }
 

@@ -40,6 +40,14 @@
   [ "$PWD" == "/a/b/b" ]
 }
 
+@test "gup s\ s: goes to nearest 's s' directory." {
+  source "$TRAVIS_BUILD_DIR/gup.sh"
+  sudo mkdir -p /a/s\ s/c/d
+  cd /a/s\ s/c/d
+  gup s\ s
+  [ "$PWD" == "/a/s s" ]
+}
+
 @test "gup x: stays in the same directory." {
   source "$TRAVIS_BUILD_DIR/gup.sh"
   sudo mkdir -p /a/b/b/c/d
