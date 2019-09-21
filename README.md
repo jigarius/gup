@@ -12,7 +12,7 @@ bunch of `..` (dot dot). Laziness is the mother of invention.
 * Source `gup.sh` file in your shell to get the `gup` command.
 * Source `gup-completion.sh` file in your shell to get `tab` completion.
 
-```
+```bash
 # In ~/.bashrc or equivalent.
 source /path/to/gup/gup.sh
 source /path/to/gup/gup-completion.sh
