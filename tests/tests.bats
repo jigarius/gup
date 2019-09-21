@@ -21,6 +21,14 @@
   [ "$PWD" == "/a/b" ]
 }
 
+@test "gup 2: goes to nearest '2' directory." {
+  source "$TRAVIS_BUILD_DIR/gup.sh"
+  mkdir -p /a/2/b/c/d
+  cd /a/2/b/c/d
+  gup 2
+  [ "$PWD" == "/a/2" ]
+}
+
 @test "gup b: goes to nearest 'b' directory." {
   source "$TRAVIS_BUILD_DIR/gup.sh"
   cd /a/b/b/c/d

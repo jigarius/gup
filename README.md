@@ -9,7 +9,8 @@ bunch of `..` (dot dot). Laziness is the mother of invention.
 ## Installation
 
 * Put the contents of this repository in a directory.
-* Source the `gup.sh` file in your shell to get the `gup` command.
+* Source `gup.sh` file in your shell to get the `gup` command.
+* Source `gup-completion.sh` file in your shell to get `tab` completion.
 
 ```
 # In ~/.bashrc or equivalent.
@@ -19,32 +20,32 @@ source /path/to/gup/gup-completion.sh
 
 ## Usage
 
-Here are some ways to use `gup`.
-
-### No arguments
-
-Goes up `1` level. Equivalent of `cd ..`.
+Run with no arguments to go up 1 directory.
 
 ```bash
+# Equivalent of cd ..
 /a/b/c $ gup # Goes to: /a/b
 ```
 
-### Numeric argument
-
-Goes up `3` levels. Equivalent of `cd ../../..`.
+Run with a numeric argument to go up N directories.
 
 ```bash
+# Equivalent of cd ../../..
 /a/b/c/d $ gup 3 # Goes to: /a
 ```
 
-### Alphanumeric argument
-
-Goes up to the nearest directory named `b`. If no directory with such a name
-is found, then you stay in the same directory.
-
+Run with a string argument to go up to the nearest ancestor directory
+with a matching name.
 
 ```bash
 /a/b/b/c/d $ gup b # Goes to: /a/b/b
+```
+
+If the argument is numeric and an ancestor directory with a matching name
+exists, then you go up to that ancestor directory.
+
+```bash
+/a/2/c/d/e $ gup 2 # Goes to: /a/2
 ```
 
 ## Thank you

@@ -10,18 +10,27 @@ gup() {
     __gup_log "Being verbose!"
   fi
 
+  # Get the current working directory.
+  local PWD_OLD="$PWD"
+  __gup_log "Old PWD: $PWD"
+
   # By default, go up once.
   local TARGET="${1:-1}"
   __gup_log "Target is: $TARGET."
 
-  # For numeric argument.
-  if [[ $TARGET =~ ^-?[0-9]+$ ]]; then
-    __gup_log "Target is numeric."
+  # Treat target as a string first.
+  # This looks up ancestor directories with numeric names, if any.
+  __gup_log "Treating target as a string."
+  __gup_by_string $TARGET
+
+  # If treating the argument as a string doesn't have any effect,
+  # then treat the argument as a number.
+  if [[ "$PWD_OLD" == "$PWD" ]]; then
+    __gup_log "Treating target as a number."
     __gup_by_number $TARGET
-  else
-    __gup_log "Target is alphanumeric."
-    __gup_by_alphanumeric $TARGET
   fi
+
+  __gup_log "New PWD: $PWD"
 }
 
 # Runs gup with numeric argument.
@@ -31,29 +40,28 @@ __gup_by_number() {
 
   if (( $COUNT < 0 )); then
     __gup_log "Argument cannot be negative."
-    exit 1
+    return 1
   fi
 
-  local COMMAND="cd ."
-  if (( $COUNT == 0 )); then
-    __gup_log "Staying in the same directory."
-  else
+  # If target is a string it will result in 0.  Alternatively, the user
+  # might've entered "0" as the target. When argument is 0, we do nothing.
+  if (( $COUNT != 0 )); then
     __gup_log "Going up $COUNT directories."
 
-    COMMAND="cd "
+    local COMMAND="cd "
     for I in $(seq 1 $COUNT); do
       COMMAND="$COMMAND../"
     done
-  fi
 
-  __gup_log "Running: $COMMAND"
-  eval $COMMAND
+    __gup_log "Running: $COMMAND"
+    eval $COMMAND
+  fi
 }
 
-# Runs gup with alphanumeric argument.
-__gup_by_alphanumeric() {
+# Runs gup with string argument.
+__gup_by_string() {
   local TARGET="$1"
-  local DEST="$PWD"
+  local DEST=$(dirname $PWD)
   local CURDIR=""
 
   # Look for the nearest parent directory named "$TARGET".
@@ -61,7 +69,7 @@ __gup_by_alphanumeric() {
   do
     CURDIR=$(basename $DEST)
     if [[ "$CURDIR" == "$TARGET" ]]; then
-      __gup_log "Match found!"
+      __gup_log "Ancestor directory \"$TARGET\" found."
       break
     else
       __gup_log "Moving up: \"$CURDIR\" != \"$TARGET\""
@@ -69,17 +77,15 @@ __gup_by_alphanumeric() {
     DEST=$(dirname $DEST)
   done
 
-  # # If a matching directory was found, go to it. However,
-  # # if a match was not found, we should be at "/" right now.
-  local COMMAND="cd ."
+  # If a matching directory was found, go to it. However,
+  # if a match was not found, we should be at "/" right now.
   if [[ "$DEST" == "/" ]]; then
-    __gup_log "Staying in the same directory."
+    __gup_log "Ancestor directory \"$TARGET\" not found."
   else
     COMMAND="cd $DEST"
+    __gup_log "Running: $COMMAND"
+    eval $COMMAND
   fi
-
-  __gup_log "Running: $COMMAND"
-  eval $COMMAND
 }
 
 # Logs a message.
