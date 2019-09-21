@@ -25,7 +25,7 @@ gup() {
 
   # Call method as per command.
   case "$method" in
-    "exec") __gup_exec $target $force_number ;;
+    "exec") __gup_exec "$target" $force_number ;;
     "version") __gup_version ;;
   esac
 }

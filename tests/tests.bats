@@ -52,7 +52,7 @@
   source "$TRAVIS_BUILD_DIR/gup.sh"
   sudo mkdir -p /a/s\ s/c/d
   cd /a/s\ s/c/d
-  gup -v "s s"
+  gup s\ s
   [ "$PWD" == "/a/s s" ]
 }
 
