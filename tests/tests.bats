@@ -49,6 +49,7 @@
 }
 
 @test "gup s\ s: goes to nearest 's s' directory." {
+  skip
   source "$TRAVIS_BUILD_DIR/gup.sh"
   sudo mkdir -p /a/s\ s/c/d
   cd /a/s\ s/c/d
