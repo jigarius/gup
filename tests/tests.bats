@@ -32,6 +32,14 @@
   [ "$PWD" == "/a/2" ]
 }
 
+@test "gup -n 2: goes up 2 directories." {
+  source "$TRAVIS_BUILD_DIR/gup.sh"
+  sudo mkdir -p /a/2/b/c/d
+  cd /a/2/b/c/d
+  gup -n 2
+  [ "$PWD" == "/a/2/b" ]
+}
+
 @test "gup b: goes to nearest 'b' directory." {
   source "$TRAVIS_BUILD_DIR/gup.sh"
   sudo mkdir -p /a/b/b/c/d

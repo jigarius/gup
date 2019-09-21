@@ -9,6 +9,7 @@ gup() {
   __GUP_VERBOSE=false
   # Target.
   local target=""
+  local force_number=""
 
   # Parse arguments.
   while [ $# -ne 0 ]
@@ -16,6 +17,7 @@ gup() {
     case "$1" in
       --verbose|-v) __GUP_VERBOSE=true ;;
       --version) method="version" ;;
+      --number|-n) force_number=true ;;
       *) target="$1"; break ;;
     esac
     shift
@@ -23,14 +25,14 @@ gup() {
 
   # Call method as per command.
   case "$method" in
-    "exec") __gup_exec $target ;;
+    "exec") __gup_exec $target $force_number ;;
     "version") __gup_version ;;
   esac
 }
 
 # Executes gup on an argument.
 #
-# Usage: gup <target>
+# Usage: gup <target> <force-number>
 __gup_exec() {
   # Get the current working directory.
   local pwd_old="$PWD"
@@ -40,10 +42,17 @@ __gup_exec() {
   local target="${1:-1}"
   __gup_log "Target is: $target."
 
-  # Treat target as a string first.
+  # Is the target forceably a number?
+  local force_number="$2"
+
+  # Treat target as a string first, unless it is forced to be a number.
   # This looks up ancestor directories with numeric names, if any.
-  __gup_log "Treating target as a string."
-  __gup_by_string $target
+  if [[ -z "$force_number" ]]; then
+    __gup_log "Treating target as a string."
+    __gup_by_string $target
+  else
+    __gup_log "--number flag detected."
+  fi
 
   # If treating the argument as a string doesn't have any effect,
   # then treat the argument as a number.

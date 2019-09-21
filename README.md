@@ -42,10 +42,12 @@ with a matching name.
 ```
 
 If the argument is numeric and an ancestor directory with a matching name
-exists, then you go up to that ancestor directory.
+exists, then you go up to that ancestor directory. However, you can force the
+argument to be treated as a number with the `--number` or `-n` flag.
 
 ```bash
 /a/2/c/d/e $ gup 2 # Goes to: /a/2
+/a/2/c/d/e $ gup -n 2 # Goes to: /a/2/c
 ```
 
 ## Thank you
