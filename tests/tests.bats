@@ -2,10 +2,10 @@
 
 @test "gup: goes up 1 directory." {
   source "$TRAVIS_BUILD_DIR/gup.sh"
-  sudo mkdir -p /a/b/b/c/d
-  cd /a/b/b/c/d
-  gup
-  [ "$PWD" == "/a/b/b/c" ]
+  sudo mkdir -p /a/1/b/c/d
+  cd /a/1/b/c/d
+  gup -v
+  [ "$PWD" == "/a/1/b/c" ]
 }
 
 @test "gup 0: stays in the same directory." {

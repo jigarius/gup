@@ -38,12 +38,19 @@ __gup_exec() {
   local pwd_old="$PWD"
   __gup_log "Old PWD: $pwd_old"
 
-  # By default, go up once.
-  local target="${1:-1}"
-  __gup_log "Target is: $target."
+  # Determine target.
+  local target="$1"
 
   # Is the target forceably a number?
   local force_number="$2"
+
+  # If target is empty, force it as the number "1".
+  if [[ -z "$target" ]]; then
+    target=1
+    force_number=true
+  fi
+
+  __gup_log "Target is: $target."
 
   # Treat target as a string first, unless it is forced to be a number.
   # This looks up ancestor directories with numeric names, if any.
