@@ -1,3 +1,6 @@
+# Gup version.
+__GUP_VERSION="1.5"
+
 # Gup entry-point.
 gup() {
   local method="exec"
@@ -12,6 +15,7 @@ gup() {
   do
     case "$1" in
       --verbose|-v) __GUP_VERBOSE=true ;;
+      --version) method="version" ;;
       *) target="$1"; break ;;
     esac
     shift
@@ -20,10 +24,13 @@ gup() {
   # Call method as per command.
   case "$method" in
     "exec") __gup_exec $target ;;
+    "version") __gup_version ;;
   esac
 }
 
 # Executes gup on an argument.
+#
+# Usage: gup <target>
 __gup_exec() {
   # Get the current working directory.
   local pwd_old="$PWD"
@@ -97,6 +104,17 @@ __gup_by_string() {
     __gup_log "Ancestor directory \"$target\" not found."
   else
     __gup_eval "cd \"$dest\""
+  fi
+}
+
+# Displays version information.
+#
+# Usage: __gup_version
+__gup_version() {
+  echo "gup $__GUP_VERSION"
+  if [[ $__GUP_VERBOSE == true ]]; then
+    echo "Author: Jigarius | jigarius.com"
+    echo "GitHub: github.com/jigarius/gup"
   fi
 }
 
