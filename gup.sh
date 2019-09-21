@@ -1,15 +1,30 @@
 # Gup entry-point.
 gup() {
-  # Get all arguments.
-  local args=( "$@" )
+  local method="exec"
 
-  # Check if verbose mode is enabled.
+  # Verbose mode.
   __GUP_VERBOSE=false
-  if [[ " ${args[*]} " == *" -v "* ]]; then
-    __GUP_VERBOSE=true
-    __gup_log "Being verbose!"
-  fi
+  # Target.
+  local target=""
 
+  # Parse arguments.
+  while [ $# -ne 0 ]
+  do
+    case "$1" in
+      --verbose|-v) __GUP_VERBOSE=true ;;
+      *) target="$1"; break ;;
+    esac
+    shift
+  done
+
+  # Call method as per command.
+  case "$method" in
+    "exec") __gup_exec $target ;;
+  esac
+}
+
+# Executes gup on an argument.
+__gup_exec() {
   # Get the current working directory.
   local pwd_old="$PWD"
   __gup_log "Old PWD: $pwd_old"
