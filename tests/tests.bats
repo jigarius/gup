@@ -48,12 +48,13 @@
   [ "$PWD" == "/a/b/b" ]
 }
 
-@test "gup s\ s: goes to nearest 's s' directory." {
+# Strangely, this test goes into an infinite execution.
+@test "gup 's s': goes to nearest 's s' directory." {
   skip
   source "$TRAVIS_BUILD_DIR/gup.sh"
-  sudo mkdir -p /a/s\ s/c/d
-  cd /a/s\ s/c/d
-  gup s\ s
+  sudo mkdir -p "/a/s s/c/d"
+  cd "/a/s s/c/d"
+  gup "s s"
   [ "$PWD" == "/a/s s" ]
 }
 
