@@ -16,6 +16,7 @@ gup() {
   do
     case "$1" in
       --verbose|-v) __GUP_VERBOSE=true ;;
+      --interactive|-i) method="interactive" ;;
       --version) method="version" ;;
       --number|-n) force_number=true ;;
       *) target="$1"; break ;;
@@ -24,8 +25,10 @@ gup() {
   done
 
   # Call method as per command.
+  __gup_log "Calling __gup_$method()"
   case "$method" in
     "exec") __gup_exec "$target" $force_number ;;
+    "interactive") __gup_interactive ;;
     "version") __gup_version ;;
   esac
 }
@@ -132,6 +135,42 @@ __gup_version() {
     echo "Author: Jigarius | jigarius.com"
     echo "GitHub: github.com/jigarius/gup"
   fi
+}
+
+# Allows user to choose the directory they want to go up to.
+#
+# Usage: __gup_interactive
+__gup_interactive() {
+  local dest=$(dirname $PWD)
+  local curdir=""
+  local -a choices=()
+
+  # Collect all directory names in $PWD.
+  while [ "$dest" != "/" ]
+  do
+    curdir=$(basename $dest)
+    choices+=( "$curdir" )
+    dest=$(dirname $dest)
+  done
+
+  # Generate a menu.
+  echo "Choose a destination directory:"
+  select choice in "${choices[@]}"; do
+    # If the choice is invalid, do nothing.
+    if [[ -z $choice ]]; then
+      __gup_log "Choice invalid. Doing nothing."
+      return 1
+    fi
+
+    # Determine the number of levels we have to go up.
+    local -i count="$REPLY"
+    __gup_log "Option chosen: $REPLY ($choice), i.e. go up $count directories."
+
+    # Execute gup with the number of levels to go up.
+    __gup_exec $count true
+
+    return 0
+  done
 }
 
 # Executs a command.

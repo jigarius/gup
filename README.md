@@ -50,6 +50,18 @@ argument to be treated as a number with the `--number` or `-n` flag.
 /a/2/c/d/e $ gup -n 2 # Goes to: /a/2/c
 ```
 
+Lastly, if you don't know where you want to go, you can use the interactive
+mode using the `--interactive` or `-i` flag.
+
+```bash
+/a/2/c/d/e $ gup -i
+Choose a destination directory:
+1) d
+2) c
+3) 2
+4) a
+```
+
 ## Thank you
 
 This little program was written for having fun some with `bash`. However, it
