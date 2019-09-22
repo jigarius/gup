@@ -1,5 +1,5 @@
 # Gup version.
-__GUP_VERSION="1.5"
+__GUP_VERSION="1.6"
 
 # Gup entry-point.
 gup() {
