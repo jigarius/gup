@@ -16,6 +16,7 @@ gup() {
   do
     case "$1" in
       --verbose|-v) __GUP_VERBOSE=true ;;
+      --help) method="help" ;;
       --interactive|-i) method="interactive" ;;
       --version) method="version" ;;
       --number|-n) force_number=true ;;
@@ -30,6 +31,7 @@ gup() {
     "exec") __gup_exec "$target" $force_number ;;
     "interactive") __gup_interactive ;;
     "version") __gup_version ;;
+    "help") __gup_help ;;
   esac
 }
 
@@ -192,4 +194,15 @@ __gup_log() {
   if [ "$__GUP_VERBOSE" = true ]; then
     echo "$message"
   fi
+}
+
+# Show user manual.
+__gup_help() {
+  # If the "man" command doesn't exist, we can't do anything.
+  if ! command -v man &> /dev/null; then
+    return
+  fi
+
+  local command="man \"$(dirname $0)/gup.groff\""
+  __gup_eval "$command"
 }

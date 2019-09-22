@@ -12,6 +12,8 @@ bunch of `..` (dot dot). Laziness is the mother of invention.
 * Source `gup.sh` file in your shell to get the `gup` command.
 * Source `gup-completion.sh` file in your shell to get `tab` completion.
 
+Run `gup --help` to see the man page.
+
 ```bash
 # In ~/.bashrc or equivalent.
 source /path/to/gup/gup.sh
@@ -20,26 +22,24 @@ source /path/to/gup/gup-completion.sh
 
 ## Usage
 
-Run with no arguments to go up 1 directory.
+### Common usage
+
+`gup` is intended to be used with a numeric or a string target (argument).
 
 ```bash
-# Equivalent of cd ..
-/a/b/c $ gup # Goes to: /a/b
-```
-
-Run with a numeric argument to go up N directories.
-
-```bash
-# Equivalent of cd ../../..
+# Running "gup 3" is the equivalent of cd ../../..
 /a/b/c/d $ gup 3 # Goes to: /a
-```
-
-Run with a string argument to go up to the nearest ancestor directory
-with a matching name.
-
-```bash
+# Running "gup b" takes you to the nearest directory in the current working
+# path with the name "b".
 /a/b/b/c/d $ gup b # Goes to: /a/b/b
 ```
+
+For a given target, `gup` checks if an ancestor directory a matching
+exists. If yes, then the user is taken there. If not, then it tries to treat
+the argument as an integer and attempts to take the user \fTARGET\fP levels
+above the current directory.
+
+### Special cases
 
 If the argument is numeric and an ancestor directory with a matching name
 exists, then you go up to that ancestor directory. However, you can force the
@@ -50,8 +50,10 @@ argument to be treated as a number with the `--number` or `-n` flag.
 /a/2/c/d/e $ gup -n 2 # Goes to: /a/2/c
 ```
 
-Lastly, if you don't know where you want to go, you can use the interactive
-mode using the `--interactive` or `-i` flag.
+### Interactive mode
+
+If you don't know where you want to go, you can use the interactive mode
+using the `--interactive` or `-i` flag.
 
 ```bash
 /a/2/c/d/e $ gup -i
@@ -61,6 +63,10 @@ Choose a destination directory:
 3) 2
 4) a
 ```
+
+### Help
+
+Forgot your commands? Worry not! Run `gup --help` to see a man page.
 
 ## Thank you
 

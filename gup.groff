@@ -1,0 +1,31 @@
+.TH GUP 7 "Sep 22, 2019" "gup 1.x" "gup manual"
+
+.SH NAME
+gup \- Helps you "go up" from the current working directory.
+.SH SYNOPSIS
+\fBgup\fP [OPTION] TARGET
+.SH DESCRIPTION
+Gup takes the user to a directory 1 or more levels above the current directory.
+
+For a given target, gup checks if an ancestor directory with a matching name
+exists. If yes, then the user is taken there. If not, then gup tries to treat
+the argument as an integer and attempts to take the user \fTARGET\fP levels
+above the current directory.
+.TP
+\fB-v --verbose\fR
+Runs in verbose mode. Shows debugging information.
+.TP
+\fB-i --interactive\fP
+Allows user to choose a destination directory with an interactive menu.
+.TP
+\fB-n --number\fR
+Forces the argument to be treated as a number.
+.TP
+\fB--version\fR
+Displays version information. Also shows author information in verbose mode.
+.TP
+\fITARGET\fP can be a number or a string.
+.SH OTHER
+Written by Jigar Mehta | jigarius.com
+.br
+Website: https://github.com/jigarius/gup
