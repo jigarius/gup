@@ -46,16 +46,21 @@ setup() {
   [ "$PWD" == "$BATS_TMPDIR/a/2/b" ]
 }
 
-@test "gup b: goes to nearest 'b' directory." {
+@test "gup b: goes to nearest 'b' directory when 2 'b' directories exist." {
   mkdir -p a/b/b/c/d
   cd a/b/b/c/d
   gup -v b
   [ "$PWD" == "$BATS_TMPDIR/a/b/b" ]
 }
 
-# Strangely, this test goes into an infinite execution.
+@test "gup b: goes to nearest 'b' directory even if current directory is 'b'." {
+  mkdir -p a/b/b
+  cd a/b/b
+  gup -v b
+  [ "$PWD" == "$BATS_TMPDIR/a/b" ]
+}
+
 @test "gup 's s': goes to nearest 's s' directory." {
-  skip
   mkdir -p "a/s s/c/d"
   cd "a/s s/c/d"
   gup -v "s s"

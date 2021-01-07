@@ -61,7 +61,7 @@ __gup_exec() {
   # This looks up ancestor directories with numeric names, if any.
   if [[ -z "$force_number" ]]; then
     __gup_log "Treating target as a string."
-    __gup_by_string $target
+    __gup_by_string "$target"
   else
     __gup_log "--number flag detected."
   fi
@@ -103,20 +103,23 @@ __gup_by_number() {
 # Runs gup with string argument.
 __gup_by_string() {
   local target="$1"
-  local dest=$(dirname $PWD)
+  local dest=$(dirname "$PWD")
   local curdir=""
 
   # Look for the nearest parent directory named "$target".
   while [ "$dest" != "/" ]
   do
-    curdir=$(basename $dest)
+    curdir=$(basename "$dest")
+    __gup_log "Analyzing: \"$curdir\""
+
     if [[ "$curdir" == "$target" ]]; then
-      __gup_log "Ancestor directory \"$target\" found."
+      __gup_log "Ancestor directory \"$target\" found"
       break
     else
       __gup_log "Moving up: \"$curdir\" != \"$target\""
     fi
-    dest=$(dirname $dest)
+
+    dest=$(dirname "$dest")
   done
 
   # If a matching directory was found, go to it. However,
