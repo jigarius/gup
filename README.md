@@ -1,7 +1,5 @@
 # GUP: Go-Up
 
-[![Build Status](https://travis-ci.com/jigarius/gup.svg?branch=master)](https://travis-ci.com/jigarius/gup)
-
 A simple bash function to help you "go up" from the current working directory.
 This saves you the energy you'd otherwise spend on typing `cd` followed with a
 bunch of `..` (dot dot). Laziness is the mother of invention.
