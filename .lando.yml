@@ -3,11 +3,10 @@ services:
   main:
     type: compose
     services:
-      image: ubuntu:gup
+      image: ubuntu:latest
       command: tail -f /dev/null
     overrides:
       build: ./lando/main
-      image: ubuntu:latest
     build:
       - chmod +x /app/gup.sh
       - echo "# GUP" >> ~/.bashrc
