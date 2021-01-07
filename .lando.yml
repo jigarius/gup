@@ -13,6 +13,3 @@ services:
       - echo "# GUP" >> ~/.bashrc
       - echo "source /app/gup.sh" >> ~/.bashrc
       - echo "source /app/gup-completion.sh" >> ~/.bashrc
-tooling:
-  bats:
-    dir: /app
