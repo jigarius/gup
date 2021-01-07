@@ -1,0 +1,18 @@
+name: gup
+services:
+  main:
+    type: compose
+    services:
+      image: ubuntu:gup
+      command: tail -f /dev/null
+    overrides:
+      build: ./lando/main
+      image: ubuntu:latest
+    build:
+      - chmod +x /app/gup.sh
+      - echo "# GUP" >> ~/.bashrc
+      - echo "source /app/gup.sh" >> ~/.bashrc
+      - echo "source /app/gup-completion.sh" >> ~/.bashrc
+tooling:
+  bats:
+    dir: /app
