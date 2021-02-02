@@ -1,5 +1,8 @@
 # JetBrains IDE files
 .idea
 
+# BATS output
+*.bats.xml
+
 # Other
 .DS_Store
