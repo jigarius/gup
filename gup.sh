@@ -94,7 +94,7 @@ __gup_by_number() {
     __gup_log "Going up $count directories."
 
     local command="cd "
-    for I in $(seq 1 $count); do
+    for I in $(seq 1 "$count"); do
       command="$command../"
     done
 
@@ -148,16 +148,16 @@ __gup_version() {
 #
 # Usage: __gup_interactive
 __gup_interactive() {
-  local dest=$(dirname $PWD)
+  local dest=$(dirname "$PWD")
   local curdir=""
   local -a choices=()
 
   # Collect all directory names in $PWD.
   while [ "$dest" != "/" ]
   do
-    curdir=$(basename $dest)
+    curdir=$(basename "$dest")
     choices+=( "$curdir" )
-    dest=$(dirname $dest)
+    dest=$(dirname "$dest")
   done
 
   # Generate a menu.
@@ -174,20 +174,20 @@ __gup_interactive() {
     __gup_log "Option chosen: $REPLY ($choice), i.e. go up $count directories."
 
     # Execute gup with the number of levels to go up.
-    __gup_exec $count true
+    __gup_exec "$count" true
 
     return 0
   done
 }
 
-# Executs a command.
+# Executes a command.
 #
 # Usage: __gup_eval [command]
 __gup_eval() {
   local command="$1"
   if [[ ! -z "$command" ]]; then
     __gup_log "Running: $command"
-    eval $command
+    eval "$command"
   fi
 }
 
@@ -208,6 +208,10 @@ __gup_help() {
     return
   fi
 
-  local command="man \"$(dirname $0)/gup.groff\""
+  local dirname, command
+
+  dirname=$(dirname "$0")
+  command="man \"$dirname/gup.groff\""
+
   __gup_eval "$command"
 }
