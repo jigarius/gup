@@ -84,14 +84,14 @@ __gup_by_number() {
   local -i count="${1:-1}"
   local command
 
-  if (( $count < 0 )); then
+  if (( count < 0 )); then
     __gup_log "Argument cannot be negative."
     return 1
   fi
 
   # If target is a string it will result in 0.  Alternatively, the user
   # might've entered "0" as the target. When argument is 0, we do nothing.
-  if (( $count != 0 )); then
+  if (( count != 0 )); then
     __gup_log "Going up $count directories."
 
     command="cd "
