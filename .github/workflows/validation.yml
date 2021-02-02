@@ -6,6 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: mig4/setup-bats@v1
-      - name: Test
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+      - name: Install BATS
+        uses: mig4/setup-bats@v1
+      - name: Run BATS
         run: bats -r test
