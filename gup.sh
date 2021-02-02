@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Gup version.
 __GUP_VERSION="1.6"
 
