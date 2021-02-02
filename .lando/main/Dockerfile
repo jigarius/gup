@@ -12,4 +12,9 @@ RUN unzip -q -o -d /opt/ /tmp/bats.zip
 RUN rm /tmp/bats.zip
 RUN /opt/bats-core-*/install.sh /usr/local
 
+# Create sandbox.
+RUN mkdir -p /var/www/alpha/bravo/charlie/charlie/echo
+RUN mkdir -p /var/www/alpha/bravo/charlie/delta
+RUN mkdir -p /var/www/alpha/bravo/sierra sierra/tango
+
 CMD ["tail", "-f", "/dev/null"]
