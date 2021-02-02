@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 
-RUN apt update -qq && apt install -qqy wget unzip
+RUN apt update -qq
+RUN apt install -qqy wget unzip shellcheck
 
 WORKDIR /app
 

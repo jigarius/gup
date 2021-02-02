@@ -12,3 +12,7 @@ services:
       - echo "# GUP" >> ~/.bashrc
       - echo "source /app/gup.sh" >> ~/.bashrc
       - echo "source /app/gup-completion.sh" >> ~/.bashrc
+tooling:
+  shellcheck:
+    service: main
+    cmd: shellcheck -s bash *.sh
