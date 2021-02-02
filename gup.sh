@@ -95,7 +95,7 @@ __gup_by_number() {
     __gup_log "Going up $count directories."
 
     command="cd "
-    for I in $(seq 1 "$count"); do
+    for _ in $(seq 1 "$count"); do
       command="$command../"
     done
 
