@@ -185,7 +185,7 @@ __gup_interactive() {
 # Usage: __gup_eval [command]
 __gup_eval() {
   local command="$1"
-  if [[ ! -z "$command" ]]; then
+  if [[ -n "$command" ]]; then
     __gup_log "Running: $command"
     eval "$command"
   fi
