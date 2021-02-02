@@ -6,7 +6,7 @@ services:
       image: ubuntu:latest
       command: tail -f /dev/null
     overrides:
-      build: ./lando/main
+      build: ./.lando/main
     build:
       - chmod +x /app/gup.sh
       - echo "# GUP" >> ~/.bashrc
