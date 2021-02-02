@@ -82,6 +82,7 @@ __gup_exec() {
 __gup_by_number() {
   # Cast argument to integer.
   local -i count="${1:-1}"
+  local command
 
   if (( $count < 0 )); then
     __gup_log "Argument cannot be negative."
@@ -93,7 +94,7 @@ __gup_by_number() {
   if (( $count != 0 )); then
     __gup_log "Going up $count directories."
 
-    local command="cd "
+    command="cd "
     for I in $(seq 1 "$count"); do
       command="$command../"
     done
@@ -105,10 +106,11 @@ __gup_by_number() {
 # Runs gup with string argument.
 __gup_by_string() {
   local target="$1"
-  local dest=$(dirname "$PWD")
+  local dest
   local curdir=""
 
   # Look for the nearest parent directory named "$target".
+  dest=$(dirname "$PWD")
   while [ "$dest" != "/" ]
   do
     curdir=$(basename "$dest")
@@ -148,9 +150,12 @@ __gup_version() {
 #
 # Usage: __gup_interactive
 __gup_interactive() {
-  local dest=$(dirname "$PWD")
+  local dest=""
   local curdir=""
   local -a choices=()
+  local -i reply=0
+
+  dest=$(dirname "$PWD")
 
   # Collect all directory names in $PWD.
   while [ "$dest" != "/" ]
@@ -170,11 +175,11 @@ __gup_interactive() {
     fi
 
     # Determine the number of levels we have to go up.
-    local -i count="$REPLY"
-    __gup_log "Option chosen: $REPLY ($choice), i.e. go up $count directories."
+    reply="$REPLY"
+    __gup_log "Option chosen: $REPLY ($choice), i.e. go up $reply directories."
 
     # Execute gup with the number of levels to go up.
-    __gup_exec "$count" true
+    __gup_exec "$reply" true
 
     return 0
   done
@@ -184,7 +189,9 @@ __gup_interactive() {
 #
 # Usage: __gup_eval [command]
 __gup_eval() {
-  local command="$1"
+  local command
+
+  command="$1"
   if [[ -n "$command" ]]; then
     __gup_log "Running: $command"
     eval "$command"
@@ -208,10 +215,11 @@ __gup_help() {
     return
   fi
 
-  local dirname, command
+  local dir
+  local cmd
 
-  dirname=$(dirname "$0")
-  command="man \"$dirname/gup.groff\""
+  dir=$(dirname "$0")
+  cmd="man \"$dir/gup.groff\""
 
-  __gup_eval "$command"
+  __gup_eval "$cmd"
 }
