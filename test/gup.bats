@@ -11,6 +11,16 @@ setup() {
   [ "$output" == "gup $__GUP_VERSION" ]
 }
 
+@test "gup --version --verbose: shows version." {
+  output="$(gup --version --verbose)"
+  expected="Calling __gup_version()
+gup 1.6
+Author: Jigarius | jigarius.com
+GitHub: github.com/jigarius/gup"
+
+  [ "$output" == "$expected" ]
+}
+
 @test "gup: goes up 1 directory." {
   mkdir -p a/1/b/c/d
   cd a/1/b/c/d
